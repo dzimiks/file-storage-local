@@ -1,0 +1,3 @@
+dzimiks local
+file test local
+arhive zip local
