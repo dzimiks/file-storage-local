@@ -75,7 +75,13 @@ public class LocalDirectory implements Directory {
 
 	@Override
 	public void upload(String src, String dest) {
+		try {
+			FileUtils.copyDirectory(new File(src), new File(dest));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		System.out.printf("Directory %s is successfully uploaded to %s!\n", src, dest);
 	}
 
 	// TODO: Add exception if path is null or empty string

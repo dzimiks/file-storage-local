@@ -78,7 +78,13 @@ public class LocalFile implements BasicFile {
 
 	@Override
 	public void upload(String src, String dest) {
+		try {
+			Files.copy(Paths.get(src), Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
 	}
 
 	// TODO: Add exception if path is null or empty string

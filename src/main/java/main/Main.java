@@ -38,6 +38,10 @@ public class Main {
 //		);
 //
 //		localFile.rename("renamed.txt", "/Users/dzimiks/Desktop/projects/file-storage-local/src/rename-test.txt");
+//		localFile.upload(
+//				"/Users/dzimiks/Desktop/upload.txt",
+//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload.txt"
+//		);
 
 		// TODO: Directory test
 		LocalDirectory localDirectory = new LocalDirectory();
@@ -52,5 +56,9 @@ public class Main {
 //		);
 //
 //		localDirectory.rename("dir-new", "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/dir/dir2");
+//		localDirectory.upload(
+//				"/Users/dzimiks/Desktop/upload",
+//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload"
+//		);
 	}
 }
