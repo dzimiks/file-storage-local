@@ -1,5 +1,7 @@
 package models;
 
+import exceptions.CreateFileException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  * Date: 12-04-2019 at 22:19
  */
 public class LocalFile implements BasicFile {
-
+	private LocalDirectory localDirectory;
 	private Path path;
 
 	public LocalFile() {
@@ -25,20 +27,25 @@ public class LocalFile implements BasicFile {
 		Path filePath;
 
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
-			filePath = Paths.get(path + File.separator + name);
+			filePath = Paths.get(path);
 		} else {
 			filePath = Paths.get(name);
 		}
 
 		this.path = filePath;
 
-		try {
-			Files.createFile(filePath);
-		} catch (IOException e) {
-			e.printStackTrace();
+		System.out.println(filePath);
+		if(Files.exists(filePath)){
+			try {
+				Files.createFile(Paths.get(filePath+File.separator+name));
+				System.out.printf("File %s is successfully created at path %s!\n", name, filePath.toAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			System.out.println(new CreateFileException());
 		}
 
-		System.out.printf("File %s is successfully created at path %s!\n", name, filePath.toAbsolutePath());
 	}
 
 	@Override

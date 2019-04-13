@@ -27,7 +27,7 @@ public class Main {
 
 		// TODO: File test
 		LocalFile localFile = new LocalFile();
-//		localFile.create("localFile.txt", "./src/file");
+		localFile.create("localFile.txt", "./src/file/dsadsa");
 //		localFile.delete("localFile.txt");
 //		localFile.downloadFile(
 //				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file",
@@ -44,11 +44,11 @@ public class Main {
 //				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload.txt"
 //		);
 
-		ArrayList<File> files = new ArrayList<>();
-		files.add(new File("/Users/dzimiks/Desktop/upload.txt"));
-		files.add(new File("/Users/dzimiks/Desktop/upload/test2.txt"));
-		files.add(new File("/Users/dzimiks/Desktop/upload/uploaded.txt"));
-		files.add(new File("/Users/dzimiks/Desktop/upload/dir/test1.txt"));
+//		ArrayList<File> files = new ArrayList<>();
+//		files.add(new File("/Users/dzimiks/Desktop/upload.txt"));
+//		files.add(new File("/Users/dzimiks/Desktop/upload/test2.txt"));
+//		files.add(new File("/Users/dzimiks/Desktop/upload/uploaded.txt"));
+//		files.add(new File("/Users/dzimiks/Desktop/upload/dir/test1.txt"));
 
 //		localFile.uploadMultiple(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 //		localFile.uploadMultipleZip(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
@@ -71,11 +71,11 @@ public class Main {
 //				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload"
 //		);
 
-		ArrayList<File> directories = new ArrayList<>();
-		directories.add(new File("/Users/dzimiks/Desktop/upload"));
-		directories.add(new File("/Users/dzimiks/Desktop/tex"));
-
-		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
-		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		ArrayList<File> directories = new ArrayList<>();
+//		directories.add(new File("/Users/dzimiks/Desktop/upload"));
+//		directories.add(new File("/Users/dzimiks/Desktop/tex"));
+//
+//		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 	}
 }
