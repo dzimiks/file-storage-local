@@ -22,8 +22,6 @@ public class LocalFile implements BasicFile {
 
     }
 
-
-    //TODO handle file already exist
     @Override
     public void create(String name, String path) {
         Path filePath;
@@ -37,7 +35,7 @@ public class LocalFile implements BasicFile {
         this.path = filePath;
 
 //        System.out.println(filePath);
-        if (Files.exists(filePath) && name != "") {
+        if (Files.exists(filePath) && name != "" && !Files.exists(Paths.get(filePath + File.separator + name))) {
             try {
                 Files.createFile(Paths.get(filePath + File.separator + name));
                 System.out.printf("File %s is successfully created at path %s!\n", name, filePath.toAbsolutePath());
@@ -87,7 +85,7 @@ public class LocalFile implements BasicFile {
         Path source = Paths.get(src);
         Path destination = Paths.get(dest);
 
-        if (Files.exists(source) && Files.exists(destination)) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
                 Files.copy(source,Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -146,7 +144,7 @@ public class LocalFile implements BasicFile {
 
     }
 
-    // TODO: Add exception if path is null or empty string
+
     @Override
     public void move(String src, String dest) {
         Path source;
@@ -162,7 +160,7 @@ public class LocalFile implements BasicFile {
             destination = Paths.get("invalid destination path");
         }
 
-        if (Files.exists(source) && Files.exists(destination)) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
                 Files.move(source, Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)), StandardCopyOption.REPLACE_EXISTING);
                 System.out.printf("File %s is successfully moved to %s!\n", src, dest);
@@ -175,7 +173,7 @@ public class LocalFile implements BasicFile {
         }
     }
 
-    // TODO: Handle exceptions
+
     @Override
     public void rename(String name, String path) {
         Path source;

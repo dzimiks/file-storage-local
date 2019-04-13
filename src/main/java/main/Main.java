@@ -51,10 +51,10 @@ public class Main {
 
 		// TODO: Directory test
 		LocalDirectory localDirectory = new LocalDirectory();
-//		localDirectory.create("dir", "./src/file");
-//		localDirectory.create("dir2", "./src/file/dir");
-//		localFile.create("file1.txt", "./src/file/dir");
-//		localFile.create("file2.txt", "./src/file/dir/dir2");
+		localDirectory.create("dir", "./src/file");
+		localDirectory.create("dir2", "./src/file/dir");
+		localFile.create("file1.txt", "./src/file/dir");
+		localFile.create("file2.txt", "./src/file/dir/dir2");
 //		localDirectory.delete("./src/file/dir/dir2");
 //		localDirectory.move(
 //				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/dir/dir2",

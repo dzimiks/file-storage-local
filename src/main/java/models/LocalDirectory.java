@@ -25,7 +25,7 @@ public class LocalDirectory implements Directory {
 
     }
 
-    //TODO handle already exist
+
     @Override
     public void create(String name, String path) {
         Path dirPath;
@@ -37,7 +37,7 @@ public class LocalDirectory implements Directory {
         }
 
         this.path = dirPath;
-        if (Files.exists(dirPath) && name != "") {
+        if (Files.exists(dirPath) && name != "" && !Files.exists(Paths.get(dirPath + File.separator + name))) {
             try {
                 Files.createDirectory(Paths.get(dirPath + File.separator + name));
                 System.out.printf("Directory %s is successfully created at path %s!\n", name, dirPath.toAbsolutePath());
@@ -87,7 +87,7 @@ public class LocalDirectory implements Directory {
     public void upload(String src, String dest) {
         Path source = Paths.get(src);
         Path destination = Paths.get(dest);
-        if (Files.exists(source) && Files.exists(destination)) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
                 FileUtils.copyDirectory(new File(src), new File(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)));
                 System.out.printf("Directory %s is successfully uploaded to %s!\n", src, dest);
@@ -140,7 +140,6 @@ public class LocalDirectory implements Directory {
         }
     }
 
-    // TODO: Add exception if path is null or empty string
     @Override
     public void move(String src, String dest) {
         Path source;
@@ -156,7 +155,7 @@ public class LocalDirectory implements Directory {
             destination = Paths.get("invalid destination path");
         }
 
-        if (Files.exists(source) && Files.exists(destination)) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
                 FileUtils.moveDirectory(new File(src), new File(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)));
                 System.out.printf("Directory %s is successfully moved to %s!\n", src, dest);
@@ -170,7 +169,7 @@ public class LocalDirectory implements Directory {
         }
     }
 
-    // TODO: Handle exceptions
+
     @Override
     public void rename(String name, String path) {
         Path source;
