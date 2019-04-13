@@ -1,13 +1,17 @@
 package models;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.comparator.NameFileComparator;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.NotFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author dzimiks
@@ -141,6 +145,59 @@ public class LocalDirectory implements Directory {
 
 		System.out.printf("Directory %s is successfully renamed to %s!\n",
 				path.substring(path.lastIndexOf(File.separator) + 1), name);
+	}
+
+	@Override
+	public void listFiles(String path, boolean sorted) {
+		System.out.println("List of all files in directory '" + Paths.get(path).getFileName() + "':\n");
+
+		ArrayList<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), null, true));
+
+		if (sorted) {
+			Collections.sort(files);
+		}
+
+		for (File file : files) {
+			System.out.println(file.getName());
+		}
+	}
+
+	@Override
+	public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) {
+		System.out.println("List of files with extensions " +
+				Arrays.toString(extensions) + " in directory '" +
+				Paths.get(path).getFileName() + "':\n");
+
+		ArrayList<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), extensions, true));
+
+		if (sorted) {
+			Collections.sort(files);
+		}
+
+		for (File file : files) {
+			System.out.println(file.getName());
+		}
+	}
+
+	@Override
+	public void listDirs(String path, boolean sorted) {
+		System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
+
+		ArrayList<File> directories = new ArrayList<>(
+				FileUtils.listFilesAndDirs(
+						new File(path),
+						new NotFileFilter(TrueFileFilter.INSTANCE),
+						DirectoryFileFilter.DIRECTORY
+				)
+		);
+
+		if (sorted) {
+			Collections.sort(directories);
+		}
+
+		for (File dir : directories) {
+			System.out.println(dir.getName());
+		}
 	}
 
 	public Path getPath() {
