@@ -15,150 +15,196 @@ import java.util.ArrayList;
  * Date: 12-04-2019 at 22:19
  */
 public class LocalFile implements BasicFile {
-	private LocalDirectory localDirectory;
-	private Path path;
 
-	public LocalFile() {
+    private Path path;
 
-	}
+    public LocalFile() {
 
-	@Override
-	public void create(String name, String path) {
-		Path filePath;
+    }
 
-		if (path != null && !path.equals("") && !path.equals(File.separator)) {
-			filePath = Paths.get(path);
-		} else {
-			filePath = Paths.get(name);
-		}
 
-		this.path = filePath;
+    //TODO handle file already exist
+    @Override
+    public void create(String name, String path) {
+        Path filePath;
 
-		System.out.println(filePath);
-		if(Files.exists(filePath)){
-			try {
-				Files.createFile(Paths.get(filePath+File.separator+name));
-				System.out.printf("File %s is successfully created at path %s!\n", name, filePath.toAbsolutePath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else{
-			System.out.println(new CreateFileException());
-		}
+        if (path != null && !path.equals("") && !path.equals(File.separator)) {
+            filePath = Paths.get(path);
+        } else {
+            filePath = Paths.get(name);
+        }
 
-	}
+        this.path = filePath;
 
-	@Override
-	public void delete(String path) {
-		Path filePath = null;
+//        System.out.println(filePath);
+        if (Files.exists(filePath) && name != "") {
+            try {
+                Files.createFile(Paths.get(filePath + File.separator + name));
+                System.out.printf("File %s is successfully created at path %s!\n", name, filePath.toAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println(new CreateFileException());
+        }
 
-		try {
-			if (path != null && !path.equals("") && !path.equals(File.separator)) {
-				filePath = Paths.get(path);
-			} else {
-				throw new IOException();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    }
 
-		boolean exists = false;
+    @Override
+    public void delete(String path) {
+        Path filePath = null;
 
-		try {
-			if (filePath != null) {
-				exists = Files.deleteIfExists(filePath);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            if (path != null && !path.equals("") && !path.equals(File.separator)) {
+                filePath = Paths.get(path);
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		if (exists) {
-			System.out.printf("File %s is successfully deleted from path %s!\n", filePath, filePath.toAbsolutePath());
-		} else {
-			System.out.println("File " + filePath + " doesn't exists at given path!");
-		}
-	}
+        if (Files.exists(filePath)) {
+            try {
+                Files.deleteIfExists(filePath);
+                System.out.printf("File %s is successfully deleted from path %s!\n", filePath, filePath.toAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            System.out.println(new DeleteFileException());
+            System.out.println("File " + filePath + " doesn't exists at given path!");
+        }
+    }
 
-	@Override
-	public void download(String src, String dest) {
+    @Override
+    public void download(String src, String dest) {
 
-	}
+    }
 
-	@Override
-	public void upload(String src, String dest) {
-		try {
-			Files.copy(Paths.get(src), Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    @Override
+    public void upload(String src, String dest) {
+        Path source = Paths.get(src);
+        Path destination = Paths.get(dest);
 
-		System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
-	}
+        if (Files.exists(source) && Files.exists(destination)) {
+            try {
+                Files.copy(source,Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
+        } else {
+//            System.out.println(new UploadFileException());
+            System.out.println("Upload file exception");
+        }
 
-	@Override
-	public void uploadMultiple(ArrayList<File> files, String dest) {
-		for (File file : files) {
-			try {
-				Files.copy(
-						Paths.get(file.getAbsolutePath()),
-						Paths.get(dest + File.separator + file.getName()),
-						StandardCopyOption.REPLACE_EXISTING
-				);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+    }
 
-		System.out.println("Files are successfully uploaded to " + dest);
-	}
+    @Override
+    public void uploadMultiple(ArrayList<File> files, String dest) {
+        Path path = Paths.get(dest);
 
-	@Override
-	public void uploadMultipleZip(ArrayList<File> files, String dest) {
-		Arhive arhive = new Arhive();
+        if (Files.exists(path) && files.size() != 0) {
+            for (File file : files) {
+                try {
+                    Files.copy(
+                            Paths.get(file.getAbsolutePath()),
+                            Paths.get(dest + File.separator + file.getName()),
+                            StandardCopyOption.REPLACE_EXISTING
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("Files are successfully uploaded to " + dest);
+        } else {
+//            System.out.println(new UploadMultipleFilesException());
+            System.out.println("Upload multiple files exception");
+        }
 
-		for (File file : files) {
-			try {
-				arhive.zipFile(file, file.getName().substring(0, file.getName().lastIndexOf('.')), dest);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 
-		System.out.println("Files are successfully zipped and uploaded to " + dest);
-	}
+    }
 
-	// TODO: Add exception if path is null or empty string
-	@Override
-	public void move(String src, String dest) {
-		try {
-			Files.move(Paths.get(src), Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    @Override
+    public void uploadMultipleZip(ArrayList<File> files, String dest) {
+        Path path = Paths.get(dest);
+        Arhive arhive = new Arhive();
+        if (Files.exists(path) && files.size() != 0) {
+            for (File file : files) {
+                try {
+                    arhive.zipFile(file, file.getName().substring(0, file.getName().lastIndexOf('.')), dest);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("Files are successfully zipped and uploaded to " + dest);
+        } else {
+//            System.out.println(new UploadMultipleFilesZipException());
+            System.out.println("Upload multiple files zip exception");
+        }
 
-		System.out.printf("File %s is successfully moved to %s!\n", src, dest);
-	}
+    }
 
-	// TODO: Handle exceptions
-	@Override
-	public void rename(String name, String path) {
-		Path source = Paths.get(path);
+    // TODO: Add exception if path is null or empty string
+    @Override
+    public void move(String src, String dest) {
+        Path source;
+        Path destination;
+        if (path != null && !path.equals("") && !path.equals(File.separator)) {
+            source = Paths.get(src);
+        } else {
+            source = Paths.get("invalid source path");
+        }
+        if (path != null && !path.equals("") && !path.equals(File.separator)) {
+            destination = Paths.get(dest);
+        } else {
+            destination = Paths.get("invalid destination path");
+        }
 
-		try {
-			Files.move(source, source.resolveSibling(name));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        if (Files.exists(source) && Files.exists(destination)) {
+            try {
+                Files.move(source, Paths.get(destination+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)), StandardCopyOption.REPLACE_EXISTING);
+                System.out.printf("File %s is successfully moved to %s!\n", src, dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            System.out.println(new MoveFileException());
+            System.out.println("Move file exception");
+        }
+    }
 
-		System.out.printf("File %s is successfully renamed to %s!\n",
-				path.substring(path.lastIndexOf(File.separator) + 1), name);
-	}
+    // TODO: Handle exceptions
+    @Override
+    public void rename(String name, String path) {
+        Path source;
+        if (path != null && !path.equals("") && !path.equals(File.separator)) {
+            source = Paths.get(path);
+        } else {
+            source = Paths.get("invalid source path");
+        }
 
-	public Path getPath() {
-		return path;
-	}
+        if (Files.exists(source) && name != "") {
+            try {
+                Files.move(source, source.resolveSibling(name));
+                System.out.printf("File %s is successfully renamed to %s!\n",
+                        path.substring(path.lastIndexOf(File.separator) + 1), name);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            System.out.println(new RenameFileException());
+            System.out.println("Rename file exception");
+        }
 
-	public void setPath(Path path) {
-		this.path = path;
-	}
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
 }

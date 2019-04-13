@@ -27,31 +27,27 @@ public class Main {
 
 		// TODO: File test
 		LocalFile localFile = new LocalFile();
-		localFile.create("localFile.txt", "./src/file/dsadsa");
-//		localFile.delete("localFile.txt");
-//		localFile.downloadFile(
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file",
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src"
-//		);
+//		localFile.create("localFile.txt", "./src/file");
+//		localFile.delete("./src/file/localFile.txt");
 //		localFile.move(
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/localFile.txt",
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/moved.txt"
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/localFile.txt",
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/"
 //		);
-//
-//		localFile.rename("renamed.txt", "/Users/dzimiks/Desktop/projects/file-storage-local/src/rename-test.txt");
+
+//		localFile.rename("renamed.txt", "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/localFile.txt");
 //		localFile.upload(
-//				"/Users/dzimiks/Desktop/upload.txt",
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload.txt"
+//				"/home/slime/Desktop/test.txt",
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file"
 //		);
 
 //		ArrayList<File> files = new ArrayList<>();
-//		files.add(new File("/Users/dzimiks/Desktop/upload.txt"));
-//		files.add(new File("/Users/dzimiks/Desktop/upload/test2.txt"));
+//		files.add(new File("//home/slime/Desktop/test.txt"));
+//		files.add(new File("/home/slime/Desktop/upload/upload.txt"));
 //		files.add(new File("/Users/dzimiks/Desktop/upload/uploaded.txt"));
 //		files.add(new File("/Users/dzimiks/Desktop/upload/dir/test1.txt"));
 
-//		localFile.uploadMultiple(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
-//		localFile.uploadMultipleZip(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localFile.uploadMultiple(files, "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/multiple");
+//		localFile.uploadMultipleZip(files, "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/multiple");
 
 		// TODO: Directory test
 		LocalDirectory localDirectory = new LocalDirectory();
@@ -61,29 +57,29 @@ public class Main {
 //		localFile.create("file2.txt", "./src/file/dir/dir2");
 //		localDirectory.delete("./src/file/dir/dir2");
 //		localDirectory.move(
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/dir/dir2",
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/dir2"
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/dir/dir2",
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/"
 //		);
 //
-//		localDirectory.rename("dir-new", "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/dir/dir2");
+//		localDirectory.rename("dir-new", "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/dir/dir2");
 //		localDirectory.upload(
-//				"/Users/dzimiks/Desktop/upload",
-//				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload"
+//				"/home/slime/Desktop/upload",
+//				"/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file"
 //		);
 
-		ArrayList<File> directories = new ArrayList<>();
-		directories.add(new File("/Users/dzimiks/Desktop/upload"));
-		directories.add(new File("/Users/dzimiks/Desktop/tex"));
+//		ArrayList<File> directories = new ArrayList<>();
+//		directories.add(new File("/home/slime/Desktop/upload"));
+//		directories.add(new File("/home/slime/Desktop/test"));
 
-//		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
-//		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultiple(directories, "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultipleZip(directories, "/home/slime/Faks/6.Semestar/SoftverskeKomponente/FileStorageLocal/file-storage-local/src/file/multiple");
 
-		localDirectory.listFiles("./src", false);
-		System.out.println();
-		localDirectory.listFiles("./src", true);
-		System.out.println();
-		localDirectory.listFilesWithExtensions("./src", new String[]{"java"}, false);
-		System.out.println();
-		localDirectory.listDirs("./src", false);
+//		localDirectory.listFiles("./src", false);
+//		System.out.println();
+//		localDirectory.listFiles("./src", true);
+//		System.out.println();
+//		localDirectory.listFilesWithExtensions("./src", new String[]{"java"}, false);
+//		System.out.println();
+//		localDirectory.listDirs("./src", false);
 	}
 }
