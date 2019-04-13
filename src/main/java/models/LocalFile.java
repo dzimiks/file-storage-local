@@ -100,6 +100,22 @@ public class LocalFile implements BasicFile {
 				e.printStackTrace();
 			}
 		}
+
+		System.out.println("Files are successfully uploaded to " + dest);
+	}
+
+	public void uploadMultipleZip(ArrayList<File> files, String dest) {
+		Arhive arhive = new Arhive();
+
+		for (File file : files) {
+			try {
+				arhive.zipFile(file, file.getName().substring(0, file.getName().lastIndexOf('.')), dest);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("Files are successfully zipped and uploaded to " + dest);
 	}
 
 	// TODO: Add exception if path is null or empty string

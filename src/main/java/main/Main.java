@@ -50,7 +50,8 @@ public class Main {
 		files.add(new File("/Users/dzimiks/Desktop/upload/uploaded.txt"));
 		files.add(new File("/Users/dzimiks/Desktop/upload/dir/test1.txt"));
 
-		localFile.uploadMultiple(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localFile.uploadMultiple(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localFile.uploadMultipleZip(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 
 		// TODO: Directory test
 		LocalDirectory localDirectory = new LocalDirectory();
@@ -69,5 +70,12 @@ public class Main {
 //				"/Users/dzimiks/Desktop/upload",
 //				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload"
 //		);
+
+		ArrayList<File> directories = new ArrayList<>();
+		directories.add(new File("/Users/dzimiks/Desktop/upload"));
+		directories.add(new File("/Users/dzimiks/Desktop/tex"));
+
+//		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 	}
 }

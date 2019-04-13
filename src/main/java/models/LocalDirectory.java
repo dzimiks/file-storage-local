@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  * @author dzimiks
@@ -82,6 +83,34 @@ public class LocalDirectory implements Directory {
 		}
 
 		System.out.printf("Directory %s is successfully uploaded to %s!\n", src, dest);
+	}
+
+	public void uploadMultiple(ArrayList<File> directories, String dest) {
+		for (File dir : directories) {
+			try {
+				FileUtils.copyDirectory(
+						new File(dir.getAbsolutePath()),
+						new File(dest + File.separator + dir.getName()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("Directories are successfully uploaded to " + dest);
+	}
+
+	public void uploadMultipleZip(ArrayList<File> directories, String dest) {
+		Arhive arhive = new Arhive();
+
+		for (File dir : directories) {
+			try {
+				arhive.zipDirectory(dir, dir.getName(), dest);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("Directories are successfully zipped and uploaded to " + dest);
 	}
 
 	// TODO: Add exception if path is null or empty string
