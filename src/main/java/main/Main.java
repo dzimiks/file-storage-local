@@ -75,7 +75,15 @@ public class Main {
 		directories.add(new File("/Users/dzimiks/Desktop/upload"));
 		directories.add(new File("/Users/dzimiks/Desktop/tex"));
 
-		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
-		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+//		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+
+		localDirectory.listFiles("./src", false);
+		System.out.println();
+		localDirectory.listFiles("./src", true);
+		System.out.println();
+		localDirectory.listFilesWithExtensions("./src", new String[]{"java"}, false);
+		System.out.println();
+		localDirectory.listDirs("./src", false);
 	}
 }
