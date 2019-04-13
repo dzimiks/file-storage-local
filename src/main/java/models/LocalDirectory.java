@@ -147,6 +147,7 @@ public class LocalDirectory implements Directory {
 				path.substring(path.lastIndexOf(File.separator) + 1), name);
 	}
 
+	@Override
 	public void listFiles(String path, boolean sorted) {
 		System.out.println("List of all files in directory '" + Paths.get(path).getFileName() + "':\n");
 
@@ -161,6 +162,7 @@ public class LocalDirectory implements Directory {
 		}
 	}
 
+	@Override
 	public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) {
 		System.out.println("List of files with extensions " +
 				Arrays.toString(extensions) + " in directory '" +
@@ -177,6 +179,7 @@ public class LocalDirectory implements Directory {
 		}
 	}
 
+	@Override
 	public void listDirs(String path, boolean sorted) {
 		System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
 
