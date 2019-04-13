@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 /**
  * @author dzimiks
@@ -85,6 +86,20 @@ public class LocalFile implements BasicFile {
 		}
 
 		System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
+	}
+
+	public void uploadMultiple(ArrayList<File> files, String dest) {
+		for (File file : files) {
+			try {
+				Files.copy(
+						Paths.get(file.getAbsolutePath()),
+						Paths.get(dest + File.separator + file.getName()),
+						StandardCopyOption.REPLACE_EXISTING
+				);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// TODO: Add exception if path is null or empty string

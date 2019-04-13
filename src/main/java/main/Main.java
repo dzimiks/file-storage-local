@@ -8,6 +8,7 @@ import models.Storage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author dzimiks
@@ -42,6 +43,14 @@ public class Main {
 //				"/Users/dzimiks/Desktop/upload.txt",
 //				"/Users/dzimiks/Desktop/projects/file-storage-local/src/file/upload.txt"
 //		);
+
+		ArrayList<File> files = new ArrayList<>();
+		files.add(new File("/Users/dzimiks/Desktop/upload.txt"));
+		files.add(new File("/Users/dzimiks/Desktop/upload/test2.txt"));
+		files.add(new File("/Users/dzimiks/Desktop/upload/uploaded.txt"));
+		files.add(new File("/Users/dzimiks/Desktop/upload/dir/test1.txt"));
+
+		localFile.uploadMultiple(files, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 
 		// TODO: Directory test
 		LocalDirectory localDirectory = new LocalDirectory();
