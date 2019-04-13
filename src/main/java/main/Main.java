@@ -75,7 +75,7 @@ public class Main {
 		directories.add(new File("/Users/dzimiks/Desktop/upload"));
 		directories.add(new File("/Users/dzimiks/Desktop/tex"));
 
-//		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
-//		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+		localDirectory.uploadMultiple(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
+		localDirectory.uploadMultipleZip(directories, "/Users/dzimiks/Desktop/projects/file-storage-local/src/file/multiple");
 	}
 }

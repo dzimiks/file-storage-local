@@ -88,6 +88,7 @@ public class LocalFile implements BasicFile {
 		System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
 	}
 
+	@Override
 	public void uploadMultiple(ArrayList<File> files, String dest) {
 		for (File file : files) {
 			try {
@@ -104,6 +105,7 @@ public class LocalFile implements BasicFile {
 		System.out.println("Files are successfully uploaded to " + dest);
 	}
 
+	@Override
 	public void uploadMultipleZip(ArrayList<File> files, String dest) {
 		Arhive arhive = new Arhive();
 

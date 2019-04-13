@@ -85,6 +85,7 @@ public class LocalDirectory implements Directory {
 		System.out.printf("Directory %s is successfully uploaded to %s!\n", src, dest);
 	}
 
+	@Override
 	public void uploadMultiple(ArrayList<File> directories, String dest) {
 		for (File dir : directories) {
 			try {
@@ -99,6 +100,7 @@ public class LocalDirectory implements Directory {
 		System.out.println("Directories are successfully uploaded to " + dest);
 	}
 
+	@Override
 	public void uploadMultipleZip(ArrayList<File> directories, String dest) {
 		Arhive arhive = new Arhive();
 
