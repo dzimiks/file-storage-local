@@ -22,6 +22,12 @@ public class LocalFile implements BasicFile {
 
     }
 
+    /**
+     * Creates new file instance on given path.
+     *
+     * @param name Name of the file.
+     * @param path Path where file should be created at.
+     */
     @Override
     public void create(String name, String path) {
         Path filePath;
@@ -48,6 +54,10 @@ public class LocalFile implements BasicFile {
 
     }
 
+    /**
+     * Deletes file from given path.
+     * @param path Path of the file on the storage.
+     */
     @Override
     public void delete(String path) {
         Path filePath = null;
