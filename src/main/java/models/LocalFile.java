@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author dzimiks
@@ -145,7 +146,7 @@ public class LocalFile implements BasicFile {
 	 * @param name  Name of created zip.
 	 */
 	@Override
-	public void uploadMultiple(ArrayList<File> files, String dest, String name) throws UploadMultipleException {
+	public void uploadMultiple(List<File> files, String dest, String name) throws UploadMultipleException {
 		Path path = Paths.get(dest);
 
 		if (Files.exists(path) && files.size() != 0) {
@@ -178,7 +179,7 @@ public class LocalFile implements BasicFile {
 	 * @param name  Name of created zip
 	 */
 	@Override
-	public void uploadMultipleZip(ArrayList<File> files, String dest, String name) throws UploadMultipleZipException {
+	public void uploadMultipleZip(List<File> files, String dest, String name) throws UploadMultipleZipException {
 		Path path = Paths.get(dest);
 		Arhive arhive = new Arhive();
 		if (Files.exists(path) && files.size() != 0) {

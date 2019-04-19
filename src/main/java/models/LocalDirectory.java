@@ -112,7 +112,6 @@ public class LocalDirectory implements Directory {
 		}
 	}
 
-
 	/**
 	 * Uploads directory to local storage on given path.
 	 *
@@ -145,7 +144,7 @@ public class LocalDirectory implements Directory {
 	 * @param name        Name of created zip.
 	 */
 	@Override
-	public void uploadMultiple(ArrayList<File> directories, String dest, String name) throws UploadMultipleException {
+	public void uploadMultiple(List<File> directories, String dest, String name) throws UploadMultipleException {
 		Path path = Paths.get(dest);
 		if (Files.exists(path) && directories.size() != 0) {
 			for (File dir : directories) {
@@ -174,9 +173,10 @@ public class LocalDirectory implements Directory {
 	 * @param name        Name of created zip
 	 */
 	@Override
-	public void uploadMultipleZip(ArrayList<File> directories, String dest, String name) throws UploadMultipleZipException {
+	public void uploadMultipleZip(List<File> directories, String dest, String name) throws UploadMultipleZipException {
 		Path path = Paths.get(dest);
 		Arhive arhive = new Arhive();
+
 		if (Files.exists(path) && directories.size() != 0) {
 			for (File dir : directories) {
 				try {
@@ -200,9 +200,10 @@ public class LocalDirectory implements Directory {
 	 * @param dest Path where we want to move directory.
 	 */
 	@Override
-	public void move(String src, String dest) throws MoveException{
+	public void move(String src, String dest) throws MoveException {
 		Path source;
 		Path destination;
+
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
 			source = Paths.get(src);
 		} else {
@@ -238,6 +239,7 @@ public class LocalDirectory implements Directory {
 	@Override
 	public void rename(String name, String path) throws RenameException {
 		Path source;
+
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
 			source = Paths.get(path);
 		} else {
@@ -267,30 +269,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public ArrayList<File> listFiles(String path, boolean sorted) throws ListFilesException{
-		Path dirPath = Paths.get(path);
-
-		if (Files.exists(dirPath)) {
-			System.out.println("List of all files in directory '" + Paths.get(path).getFileName() + "':\n");
-
-			ArrayList<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), null, true));
-
-			if (sorted) {
-				Collections.sort(files);
-			}
-
-			for (File file : files) {
-				System.out.println(file.getName());
-			}
-			return files;
-		} else {
-//            System.out.println(new DirectoryListFilesException());
-//			System.out.println("Directory list files exception");
-			throw new ListFilesException();
-		}
-	}
-
-	public ArrayList<File> listAllFiles(String path, boolean sorted) {
+	public List<File> listFiles(String path, boolean sorted) throws ListFilesException {
 		Path dirPath = Paths.get(path);
 		ArrayList<File> files = new ArrayList<>();
 
@@ -318,7 +297,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted     True if we want to list files in sorted order.
 	 */
 	@Override
-	public ArrayList<File> listFilesWithExtensions(String path, String[] extensions, boolean sorted) throws ListFilesException{
+	public List<File> listFilesWithExtensions(String path, String[] extensions, boolean sorted) throws ListFilesException {
 		Path dirPath = Paths.get(path);
 
 		if (Files.exists(dirPath) && extensions.length != 0) {
@@ -326,7 +305,7 @@ public class LocalDirectory implements Directory {
 					Arrays.toString(extensions) + " in directory '" +
 					Paths.get(path).getFileName() + "':\n");
 
-			ArrayList<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), extensions, true));
+			List<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), extensions, true));
 
 			if (sorted) {
 				Collections.sort(files);
@@ -351,13 +330,13 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public ArrayList<File> listDirs(String path, boolean sorted) throws ListDirectoryException{
+	public List<File> listDirs(String path, boolean sorted) throws ListDirectoryException {
 		Path dirPath = Paths.get(path);
 		ArrayList<File> directories = new ArrayList<>();
 		if (Files.exists(dirPath)) {
 			System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
 
-			 directories = new ArrayList<>(
+			directories = new ArrayList<>(
 					FileUtils.listFilesAndDirs(
 							new File(path),
 							new NotFileFilter(TrueFileFilter.INSTANCE),
@@ -381,7 +360,7 @@ public class LocalDirectory implements Directory {
 		return directories;
 	}
 
-	public ArrayList<File> listDirectories(String path, boolean sorted) {
+	public List<File> listDirectories(String path, boolean sorted) {
 		System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
 		ArrayList<File> directories = new ArrayList(
 				FileUtils.listFilesAndDirs(
