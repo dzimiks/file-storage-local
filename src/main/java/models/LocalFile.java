@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.CreateFileException;
+import exceptions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class LocalFile implements BasicFile {
 	 * @param path Path where file should be created at on local storage.
 	 */
 	@Override
-	public void create(String name, String path) {
+	public void create(String name, String path) throws CreateFileException{
 		Path filePath;
 
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
@@ -54,7 +54,8 @@ public class LocalFile implements BasicFile {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println(new CreateFileException());
+//			System.out.println(new CreateFileException());
+			throw new CreateFileException();
 		}
 
 	}
@@ -65,7 +66,7 @@ public class LocalFile implements BasicFile {
 	 * @param path Path of the file on the local storage.
 	 */
 	@Override
-	public void delete(String path) {
+	public void delete(String path) throws DeleteException {
 		Path filePath = null;
 
 		try {
@@ -87,7 +88,9 @@ public class LocalFile implements BasicFile {
 			}
 		} else {
 //            System.out.println(new DeleteFileException());
-			System.out.println("File " + filePath + " doesn't exists at given path!");
+//			System.out.println("File " + filePath + " doesn't exists at given path!");
+			throw new DeleteException();
+
 		}
 	}
 
@@ -101,7 +104,11 @@ public class LocalFile implements BasicFile {
 	 */
 	@Override
 	public void download(String src, String dest) {
-		move(src, dest);
+		try {
+			move(src, dest);
+		} catch (MoveException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -111,7 +118,7 @@ public class LocalFile implements BasicFile {
 	 * @param dest Path of the local storage directory where we want to upload it.
 	 */
 	@Override
-	public void upload(String src, String dest) {
+	public void upload(String src, String dest) throws UploadException {
 		Path source = Paths.get(src);
 		Path destination = Paths.get(dest);
 
@@ -124,7 +131,8 @@ public class LocalFile implements BasicFile {
 			System.out.printf("File %s is successfully uploaded to %s!\n", src, dest);
 		} else {
 //            System.out.println(new UploadFileException());
-			System.out.println("Upload file exception");
+//			System.out.println("Upload file exception");
+			throw new UploadException();
 		}
 
 	}
@@ -137,7 +145,7 @@ public class LocalFile implements BasicFile {
 	 * @param name  Name of created zip.
 	 */
 	@Override
-	public void uploadMultiple(ArrayList<File> files, String dest, String name) {
+	public void uploadMultiple(ArrayList<File> files, String dest, String name) throws UploadMultipleException {
 		Path path = Paths.get(dest);
 
 		if (Files.exists(path) && files.size() != 0) {
@@ -155,7 +163,8 @@ public class LocalFile implements BasicFile {
 			System.out.println("Files are successfully uploaded to " + dest);
 		} else {
 //            System.out.println(new UploadMultipleFilesException());
-			System.out.println("Upload multiple files exception");
+//			System.out.println("Upload multiple files exception");
+			throw new UploadMultipleException();
 		}
 
 
@@ -169,7 +178,7 @@ public class LocalFile implements BasicFile {
 	 * @param name  Name of created zip
 	 */
 	@Override
-	public void uploadMultipleZip(ArrayList<File> files, String dest, String name) {
+	public void uploadMultipleZip(ArrayList<File> files, String dest, String name) throws UploadMultipleZipException {
 		Path path = Paths.get(dest);
 		Arhive arhive = new Arhive();
 		if (Files.exists(path) && files.size() != 0) {
@@ -183,7 +192,8 @@ public class LocalFile implements BasicFile {
 			System.out.println("Files are successfully zipped and uploaded to " + dest);
 		} else {
 //            System.out.println(new UploadMultipleFilesZipException());
-			System.out.println("Upload multiple files zip exception");
+//			System.out.println("Upload multiple files zip exception");
+			throw new UploadMultipleZipException();
 		}
 
 	}
@@ -195,7 +205,7 @@ public class LocalFile implements BasicFile {
 	 * @param dest Path where we want to move file.
 	 */
 	@Override
-	public void move(String src, String dest) {
+	public void move(String src, String dest) throws MoveException {
 		Path source;
 		Path destination;
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
@@ -218,7 +228,8 @@ public class LocalFile implements BasicFile {
 			}
 		} else {
 //            System.out.println(new MoveFileException());
-			System.out.println("Move file exception");
+//			System.out.println("Move file exception");
+			throw new MoveException();
 		}
 	}
 
@@ -229,7 +240,7 @@ public class LocalFile implements BasicFile {
 	 * @param path Path of the file on local storage.
 	 */
 	@Override
-	public void rename(String name, String path) {
+	public void rename(String name, String path) throws RenameException {
 		Path source;
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
 			source = Paths.get(path);
@@ -247,7 +258,8 @@ public class LocalFile implements BasicFile {
 			}
 		} else {
 //            System.out.println(new RenameFileException());
-			System.out.println("Rename file exception");
+//			System.out.println("Rename file exception");
+			throw new RenameException();
 		}
 	}
 

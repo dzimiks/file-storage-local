@@ -16,3 +16,21 @@ dependencies {
     compile files('lib/file-storage.jar')
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 }
+javadoc{
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+}
+task buildJar(type: Jar) {
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': 1.0,
+                'Main-Class': 'main.Main'
+    }
+    baseName = project.name
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}

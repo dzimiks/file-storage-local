@@ -317,12 +317,13 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public void listDirs(String path, boolean sorted) {
+	public ArrayList<File> listDirs(String path, boolean sorted) {
 		Path dirPath = Paths.get(path);
+		ArrayList<File> directories = new ArrayList<>();
 		if (Files.exists(dirPath)) {
 			System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
 
-			ArrayList<File> directories = new ArrayList<>(
+			 directories = new ArrayList<>(
 					FileUtils.listFilesAndDirs(
 							new File(path),
 							new NotFileFilter(TrueFileFilter.INSTANCE),
@@ -337,11 +338,12 @@ public class LocalDirectory implements Directory {
 			for (File dir : directories) {
 				System.out.println(dir.getName());
 			}
+
 		} else {
 //            System.out.println(new DirectoryListDirecotiesException());
 			System.out.println("Directory list directories exception");
 		}
-
+		return directories;
 	}
 
 	public ArrayList<File> listDirectories(String path, boolean sorted) {
