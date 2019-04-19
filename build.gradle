@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'raf'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 sourceCompatibility = 1.8
 
@@ -16,10 +16,7 @@ dependencies {
     compile files('lib/file-storage.jar')
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 }
-javadoc{
-    source = sourceSets.main.allJava
-    classpath = configurations.compile
-}
+
 task buildJar(type: Jar) {
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
 
@@ -33,4 +30,9 @@ task buildJar(type: Jar) {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
 }

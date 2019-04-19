@@ -2,7 +2,6 @@ package models;
 
 import exceptions.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.comparator.NameFileComparator;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -288,7 +287,26 @@ public class LocalDirectory implements Directory {
 //			System.out.println("Directory list files exception");
 			throw new ListFilesException();
 		}
+	}
 
+	public ArrayList<File> listAllFiles(String path, boolean sorted) {
+		Path dirPath = Paths.get(path);
+		ArrayList<File> files = new ArrayList<>();
+
+		if (Files.exists(dirPath)) {
+			System.out.println("List of all files in directory '" + Paths.get(path).getFileName() + "':\n");
+
+			files = new ArrayList<>(FileUtils.listFiles(new File(path), null, true));
+
+			if (sorted) {
+				Collections.sort(files);
+			}
+		} else {
+//            System.out.println(new DirectoryListFilesException());
+			System.out.println("Directory list files exception");
+		}
+
+		return files;
 	}
 
 	/**
