@@ -267,7 +267,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public void listFiles(String path, boolean sorted) throws ListFilesException{
+	public ArrayList<File> listFiles(String path, boolean sorted) throws ListFilesException{
 		Path dirPath = Paths.get(path);
 
 		if (Files.exists(dirPath)) {
@@ -282,6 +282,7 @@ public class LocalDirectory implements Directory {
 			for (File file : files) {
 				System.out.println(file.getName());
 			}
+			return files;
 		} else {
 //            System.out.println(new DirectoryListFilesException());
 //			System.out.println("Directory list files exception");
@@ -317,7 +318,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted     True if we want to list files in sorted order.
 	 */
 	@Override
-	public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) throws ListFilesException{
+	public ArrayList<File> listFilesWithExtensions(String path, String[] extensions, boolean sorted) throws ListFilesException{
 		Path dirPath = Paths.get(path);
 
 		if (Files.exists(dirPath) && extensions.length != 0) {
@@ -334,6 +335,7 @@ public class LocalDirectory implements Directory {
 			for (File file : files) {
 				System.out.println(file.getName());
 			}
+			return files;
 		} else {
 //            System.out.println(new DirectoryListFilesWithExtensionsException());
 //			System.out.println("Directory list files with extension exception");
