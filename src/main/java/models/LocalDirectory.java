@@ -1,5 +1,6 @@
 package models;
 
+import exceptions.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.comparator.NameFileComparator;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -37,7 +38,7 @@ public class LocalDirectory implements Directory {
 	 * @param path Path of the directory on the local storage.
 	 */
 	@Override
-	public void create(String name, String path) {
+	public void create(String name, String path) throws CreateDirectoryException {
 		Path dirPath;
 
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
@@ -56,7 +57,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.printf(new CreateDirectoryException());
-			System.out.println("Directory create exception");
+//			System.out.println("Directory create exception");
+			throw new CreateDirectoryException();
 		}
 	}
 
@@ -66,7 +68,7 @@ public class LocalDirectory implements Directory {
 	 * @param path Path of the directory on the local storage.
 	 */
 	@Override
-	public void delete(String path) {
+	public void delete(String path) throws DeleteException {
 		Path dirPath = null;
 
 		try {
@@ -88,7 +90,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.println(new DeleteFileException());
-			System.out.println("Directory " + dirPath + " doesn't exists at given path!");
+//			System.out.println("Directory " + dirPath + " doesn't exists at given path!");
+			throw new DeleteException();
 		}
 
 	}
@@ -103,7 +106,11 @@ public class LocalDirectory implements Directory {
 	 */
 	@Override
 	public void download(String src, String dest) {
-		move(src, dest);
+		try {
+			move(src, dest);
+		} catch (MoveException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -114,7 +121,7 @@ public class LocalDirectory implements Directory {
 	 * @param dest Path of the local storage directory where we want to upload it.
 	 */
 	@Override
-	public void upload(String src, String dest) {
+	public void upload(String src, String dest) throws UploadException {
 		Path source = Paths.get(src);
 		Path destination = Paths.get(dest);
 		if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest + File.separator + src.substring(src.lastIndexOf(File.separator) + 1)))) {
@@ -125,8 +132,9 @@ public class LocalDirectory implements Directory {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("Upload directory exception");
+//			System.out.println("Upload directory exception");
 //            System.out.println(new DirectoryUploadException());
+			throw new UploadException();
 		}
 	}
 
@@ -138,7 +146,7 @@ public class LocalDirectory implements Directory {
 	 * @param name        Name of created zip.
 	 */
 	@Override
-	public void uploadMultiple(ArrayList<File> directories, String dest, String name) {
+	public void uploadMultiple(ArrayList<File> directories, String dest, String name) throws UploadMultipleException {
 		Path path = Paths.get(dest);
 		if (Files.exists(path) && directories.size() != 0) {
 			for (File dir : directories) {
@@ -153,7 +161,8 @@ public class LocalDirectory implements Directory {
 			System.out.println("Directories are successfully uploaded to " + dest);
 		} else {
 //            System.out.println(new UploadMultipleDirectoriesException());
-			System.out.println("Upload multiple directories exception");
+//			System.out.println("Upload multiple directories exception");
+			throw new UploadMultipleException();
 		}
 
 	}
@@ -166,7 +175,7 @@ public class LocalDirectory implements Directory {
 	 * @param name        Name of created zip
 	 */
 	@Override
-	public void uploadMultipleZip(ArrayList<File> directories, String dest, String name) {
+	public void uploadMultipleZip(ArrayList<File> directories, String dest, String name) throws UploadMultipleZipException {
 		Path path = Paths.get(dest);
 		Arhive arhive = new Arhive();
 		if (Files.exists(path) && directories.size() != 0) {
@@ -180,7 +189,8 @@ public class LocalDirectory implements Directory {
 			System.out.println("Directories are successfully zipped and uploaded to " + dest);
 		} else {
 //            System.out.println(new UploadMultipleDirectoriesZipException());
-			System.out.println("Upload multiple directories zip exception");
+//			System.out.println("Upload multiple directories zip exception");
+			throw new UploadMultipleZipException();
 		}
 	}
 
@@ -191,7 +201,7 @@ public class LocalDirectory implements Directory {
 	 * @param dest Path where we want to move directory.
 	 */
 	@Override
-	public void move(String src, String dest) {
+	public void move(String src, String dest) throws MoveException{
 		Path source;
 		Path destination;
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
@@ -215,7 +225,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.println(new MoveDirectoryException());
-			System.out.println("Move directory exception");
+//			System.out.println("Move directory exception");
+			throw new MoveException();
 		}
 	}
 
@@ -226,7 +237,7 @@ public class LocalDirectory implements Directory {
 	 * @param path Path of the directory on local storage.
 	 */
 	@Override
-	public void rename(String name, String path) {
+	public void rename(String name, String path) throws RenameException {
 		Path source;
 		if (path != null && !path.equals("") && !path.equals(File.separator)) {
 			source = Paths.get(path);
@@ -244,7 +255,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.println(new RenameDirectoryException());
-			System.out.println("Rename directory exception");
+//			System.out.println("Rename directory exception");
+			throw new RenameException();
 		}
 
 	}
@@ -256,7 +268,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public void listFiles(String path, boolean sorted) {
+	public void listFiles(String path, boolean sorted) throws ListFilesException{
 		Path dirPath = Paths.get(path);
 
 		if (Files.exists(dirPath)) {
@@ -273,7 +285,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.println(new DirectoryListFilesException());
-			System.out.println("Directory list files exception");
+//			System.out.println("Directory list files exception");
+			throw new ListFilesException();
 		}
 
 	}
@@ -286,7 +299,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted     True if we want to list files in sorted order.
 	 */
 	@Override
-	public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) {
+	public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) throws ListFilesException{
 		Path dirPath = Paths.get(path);
 
 		if (Files.exists(dirPath) && extensions.length != 0) {
@@ -305,7 +318,8 @@ public class LocalDirectory implements Directory {
 			}
 		} else {
 //            System.out.println(new DirectoryListFilesWithExtensionsException());
-			System.out.println("Directory list files with extension exception");
+//			System.out.println("Directory list files with extension exception");
+			throw new ListFilesException();
 		}
 
 	}
@@ -317,7 +331,7 @@ public class LocalDirectory implements Directory {
 	 * @param sorted True if we want to list files in sorted order.
 	 */
 	@Override
-	public ArrayList<File> listDirs(String path, boolean sorted) {
+	public ArrayList<File> listDirs(String path, boolean sorted) throws ListDirectoryException{
 		Path dirPath = Paths.get(path);
 		ArrayList<File> directories = new ArrayList<>();
 		if (Files.exists(dirPath)) {
@@ -341,7 +355,8 @@ public class LocalDirectory implements Directory {
 
 		} else {
 //            System.out.println(new DirectoryListDirecotiesException());
-			System.out.println("Directory list directories exception");
+//			System.out.println("Directory list directories exception");
+			throw new ListDirectoryException();
 		}
 		return directories;
 	}
