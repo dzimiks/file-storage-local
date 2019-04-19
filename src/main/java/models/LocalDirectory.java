@@ -18,14 +18,24 @@ import java.util.*;
  * Date: 12-04-2019 at 21:11
  */
 public class LocalDirectory implements Directory {
-
+    /**
+     * @var path Variable used for storing path of created directory.
+     */
     private Path path;
 
+    /**
+     * Directory constructor.
+     */
     public LocalDirectory() {
 
     }
 
-
+    /**
+     * Creates local directory instance on given path.
+     *
+     * @param name Name of the directory.
+     * @param path Path of the directory on the local storage.
+     */
     @Override
     public void create(String name, String path) {
         Path dirPath;
@@ -50,6 +60,11 @@ public class LocalDirectory implements Directory {
         }
     }
 
+    /**
+     * Deletes local directory from given path.
+     *
+     * @param path Path of the directory on the local storage.
+     */
     @Override
     public void delete(String path) {
         Path dirPath = null;
@@ -78,30 +93,52 @@ public class LocalDirectory implements Directory {
 
     }
 
+    /**
+     * Downloads local directory from given path.
+     * (Uses move() because that operation simulates downloading directory from
+     * local storage)
+     *
+     * @param src  Path of the directory on the storage.
+     * @param dest Path of the directory where we want to download it.
+     */
     @Override
     public void download(String src, String dest) {
-
+        move(src, dest);
     }
 
+
+    /**
+     * Uploads directory to local storage on given path.
+     *
+     * @param src  Path of the directory on the storage.
+     * @param dest Path of the local storage directory where we want to upload it.
+     */
     @Override
     public void upload(String src, String dest) {
         Path source = Paths.get(src);
         Path destination = Paths.get(dest);
-        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest + File.separator + src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
-                FileUtils.copyDirectory(new File(src), new File(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)));
+                FileUtils.copyDirectory(new File(src), new File(dest + File.separator + src.substring(src.lastIndexOf(File.separator) + 1)));
                 System.out.printf("Directory %s is successfully uploaded to %s!\n", src, dest);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             System.out.println("Upload directory exception");
 //            System.out.println(new DirectoryUploadException());
         }
     }
 
+    /**
+     * Uploads multiple directories on given path in local storage.
+     *
+     * @param directories List of directories.
+     * @param dest        Path on local storage where we want to upload directories.
+     * @param name        Name of created zip.
+     */
     @Override
-    public void uploadMultiple(ArrayList<File> directories, String dest) {
+    public void uploadMultiple(ArrayList<File> directories, String dest, String name) {
         Path path = Paths.get(dest);
         if (Files.exists(path) && directories.size() != 0) {
             for (File dir : directories) {
@@ -114,15 +151,22 @@ public class LocalDirectory implements Directory {
                 }
             }
             System.out.println("Directories are successfully uploaded to " + dest);
-        }else {
+        } else {
 //            System.out.println(new UploadMultipleDirectoriesException());
             System.out.println("Upload multiple directories exception");
         }
 
     }
 
+    /**
+     * Uploads multiple zipped directories on given path in local storage.
+     *
+     * @param directories List of directories.
+     * @param dest        Path on local storage where we want to upload zipped directories.
+     * @param name        Name of created zip
+     */
     @Override
-    public void uploadMultipleZip(ArrayList<File> directories, String dest) {
+    public void uploadMultipleZip(ArrayList<File> directories, String dest, String name) {
         Path path = Paths.get(dest);
         Arhive arhive = new Arhive();
         if (Files.exists(path) && directories.size() != 0) {
@@ -134,12 +178,18 @@ public class LocalDirectory implements Directory {
                 }
             }
             System.out.println("Directories are successfully zipped and uploaded to " + dest);
-        }else{
+        } else {
 //            System.out.println(new UploadMultipleDirectoriesZipException());
             System.out.println("Upload multiple directories zip exception");
         }
     }
 
+    /**
+     * Moves directory to given path.
+     *
+     * @param src  Path of the directory on local storage.
+     * @param dest Path where we want to move directory.
+     */
     @Override
     public void move(String src, String dest) {
         Path source;
@@ -155,21 +205,26 @@ public class LocalDirectory implements Directory {
             destination = Paths.get("invalid destination path");
         }
 
-        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)))) {
+        if (Files.exists(source) && Files.exists(destination) && !Files.exists(Paths.get(dest + File.separator + src.substring(src.lastIndexOf(File.separator) + 1)))) {
             try {
-                FileUtils.moveDirectory(new File(src), new File(dest+File.separator+src.substring(src.lastIndexOf(File.separator) + 1)));
+                FileUtils.moveDirectory(new File(src), new File(dest + File.separator + src.substring(src.lastIndexOf(File.separator) + 1)));
                 System.out.printf("Directory %s is successfully moved to %s!\n", src, dest);
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
-        }else{
+        } else {
 //            System.out.println(new MoveDirectoryException());
             System.out.println("Move directory exception");
         }
     }
 
-
+    /**
+     * Renames current directory.
+     *
+     * @param name New name for the directory.
+     * @param path Path of the directory on local storage.
+     */
     @Override
     public void rename(String name, String path) {
         Path source;
@@ -187,18 +242,24 @@ public class LocalDirectory implements Directory {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
 //            System.out.println(new RenameDirectoryException());
             System.out.println("Rename directory exception");
         }
 
     }
 
+    /**
+     * Lists all files in directory from given path.
+     *
+     * @param path   Path of the directory on local storage.
+     * @param sorted True if we want to list files in sorted order.
+     */
     @Override
     public void listFiles(String path, boolean sorted) {
         Path dirPath = Paths.get(path);
 
-        if(Files.exists(dirPath)){
+        if (Files.exists(dirPath)) {
             System.out.println("List of all files in directory '" + Paths.get(path).getFileName() + "':\n");
 
             ArrayList<File> files = new ArrayList<>(FileUtils.listFiles(new File(path), null, true));
@@ -210,18 +271,25 @@ public class LocalDirectory implements Directory {
             for (File file : files) {
                 System.out.println(file.getName());
             }
-        }else{
+        } else {
 //            System.out.println(new DirectoryListFilesException());
             System.out.println("Directory list files exception");
         }
 
     }
 
+    /**
+     * Lists all files with given extensions in directory from given path.
+     *
+     * @param path       Path of the directory on the local storage.
+     * @param extensions Array of file extensions.
+     * @param sorted     True if we want to list files in sorted order.
+     */
     @Override
     public void listFilesWithExtensions(String path, String[] extensions, boolean sorted) {
         Path dirPath = Paths.get(path);
 
-        if(Files.exists(dirPath) && extensions.length!=0){
+        if (Files.exists(dirPath) && extensions.length != 0) {
             System.out.println("List of files with extensions " +
                     Arrays.toString(extensions) + " in directory '" +
                     Paths.get(path).getFileName() + "':\n");
@@ -235,17 +303,23 @@ public class LocalDirectory implements Directory {
             for (File file : files) {
                 System.out.println(file.getName());
             }
-        }else{
+        } else {
 //            System.out.println(new DirectoryListFilesWithExtensionsException());
             System.out.println("Directory list files with extension exception");
         }
 
     }
 
+    /**
+     * Lists all directories in directory from given path.
+     *
+     * @param path   Path of the directory on the local storage.
+     * @param sorted True if we want to list files in sorted order.
+     */
     @Override
     public void listDirs(String path, boolean sorted) {
         Path dirPath = Paths.get(path);
-        if(Files.exists(dirPath)){
+        if (Files.exists(dirPath)) {
             System.out.println("List of all directories in directory '" + Paths.get(path).getFileName() + "':\n");
 
             ArrayList<File> directories = new ArrayList<>(
@@ -263,17 +337,25 @@ public class LocalDirectory implements Directory {
             for (File dir : directories) {
                 System.out.println(dir.getName());
             }
-        }else{
+        } else {
 //            System.out.println(new DirectoryListDirecotiesException());
             System.out.println("Directory list directories exception");
         }
 
     }
 
+    /**
+     * Used for getting path value.
+     *
+     * @return path value.
+     */
     public Path getPath() {
         return path;
     }
 
+    /**
+     * Used for setting path value.
+     */
     public void setPath(Path path) {
         this.path = path;
     }
